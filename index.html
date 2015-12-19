@@ -25,9 +25,11 @@
 			<div id="header"><span class="hamager">≡</span><img src="img/fogbelt-sf-2.png" class="logo"><h1>Neighborhood Guide</h1></div>
 			<div id="nav-bar">
 				<input id="filter-input" class="sidebar-input" type="text">
-				<ul id="places-list">
-					<li class="nav-li"></li>
+				<!-- ko with: placeList-->
+				<ul id="places-list" data-bind="foreach: $parent.placeList">
+					<li class="nav-li" data-bind="text: title, click: $root.resetMarker"></li>
 				</ul>
+				<!-- /ko -->
 			</div>
 			<div id="map"></div>
 
