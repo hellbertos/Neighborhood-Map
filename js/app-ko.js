@@ -132,6 +132,16 @@ window.onload = function() {
 		//console.info("OBsAry item is "+modelCtx.placeList()[0].title);
 
 
+		//TEST Method
+		modelCxt.resetMarker = function(marker) {
+				console.info("YAAAY my naem is "+this.title);
+
+				this.animation = 'BOUNCE';
+				console.log("Animate: "+this.animation+"\n"+this.title);
+				//setUpMarkers();
+
+			}
+
 	} // END VIEW MODEL
 
 
