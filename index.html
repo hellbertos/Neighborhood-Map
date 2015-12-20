@@ -21,7 +21,7 @@
 				<input id="filter-input" class="sidebar-input" type="text">
 				<!-- ko with: placeList-->
 				<ul id="places-list" data-bind="foreach: $parent.placeList">
-					<li class="nav-li" data-bind="text: title, click: $root.resetMarker"></li>
+					<li class="nav-li" data-bind="text: title, click: $root.selectMarker"></li>
 				</ul>
 				<!-- /ko -->
 			</div>
