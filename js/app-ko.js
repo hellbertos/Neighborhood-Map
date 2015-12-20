@@ -134,11 +134,14 @@ window.onload = function() {
 
 		//TEST Method
 		modelCxt.resetMarker = function(marker) {
-				console.info("YAAAY my naem is "+this.title);
-
-				this.animation = 'BOUNCE';
+				console.info("YAAAY my name is "+this.title);
+				marker.setAnimation(google.maps.Animation.BOUNCE);
 				console.log("Animate: "+this.animation+"\n"+this.title);
-				//setUpMarkers();
+
+				setTimeout(function () {
+			          marker.setAnimation(null);
+			      }, 2800);
+
 
 			}
 
