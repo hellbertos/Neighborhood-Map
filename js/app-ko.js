@@ -41,15 +41,6 @@ window.onload = function() {
 		 animation: null,
 		 description: 'Come for the tasty food, stay for the tasty craft beers.'
 		},
-		{title: 'La Playa Taqueria',
-		latLng: {
-			lat: 37.752834,
-		 	lng: -122.504720
-		 },
-		 icon: dineIcon,
-		 animation: null,
-		 description: 'Argueably the best breakfast burritos in the fogbelt.'
-		},
 		{title: 'Ocean Beach',
 		latLng: {
 			lat: 37.765166,
@@ -67,6 +58,15 @@ window.onload = function() {
 		 icon: surfIcon,
 		 animation: null,
 		 description: 'Locally owned and operated. Staffed with top-quality gear and experts to help you make the right purchase or rental.'
+		},
+		{title: 'La Playa Taqueria',
+		latLng: {
+			lat: 37.752834,
+		 	lng: -122.504720
+		 },
+		 icon: dineIcon,
+		 animation: null,
+		 description: 'Argueably the best breakfast burritos in the fogbelt.'
 		},
 		{title: 'The Rip Tide Lounge',
 		latLng: {
@@ -89,14 +89,14 @@ window.onload = function() {
 	];
 
 	// Constructor to create new markers
-	var Marker = function (latLng, title, icon, map) {
+	var Marker = function (latLng, title, icon, description, map) {
 	    return new google.maps.Marker({
 	      position: latLng,
 	      map: map,
 	      icon: icon,
-	      title: title
+	      title: title,
+	      description: description
 	    });
-
 
 	 };
 
@@ -112,7 +112,7 @@ window.onload = function() {
 		var mapCanvas = document.getElementById('map');
 		// Add Latitude and Longitude options and zoom level
 		var mapOptions = {
-				center: new google.maps.LatLng(37.770191, -122.502345),
+				center: new google.maps.LatLng(37.760191, -122.502345),
 				zoom: 14,
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 		}
@@ -126,24 +126,51 @@ window.onload = function() {
 		//Create the markers
 		for(var i = 0; i < localCoords.length; i++ ) {
 			locale = localCoords[i];
-			//console.log("Lat ling is: "+locale.title)
-			modelCxt.placeList.push( new Marker(locale.latLng, locale.title, locale.icon, modelCxt.map) );
+
+			// create the new markers
+			var marker = (new Marker(locale.latLng, locale.title, locale.icon, locale.description, modelCxt.map) );
+
+			// Add the markers to an observable array
+			modelCxt.placeList.push(marker);
+
+			/*google.maps.event.addListener(marker, 'click', function() {
+        		modelCxt.resetMarker(marker);
+        	});**/
+
+			// Add the clickable event to the marker
+			(function(marker) {
+				google.maps.event.addListener(marker, 'click', function() {
+					modelCxt.selectMarker(marker);
+				})
+			})(marker);
+
 		}
 		//console.info("OBsAry item is "+modelCtx.placeList()[0].title);
 
 
 		//TEST Method
-		modelCxt.resetMarker = function(marker) {
-				console.info("YAAAY my name is "+this.title);
-				marker.setAnimation(google.maps.Animation.BOUNCE);
-				console.log("Animate: "+this.animation+"\n"+this.title);
+		modelCxt.selectMarker = function(marker) {
+				//console.log("Animate: "+marker.animation+"\n"+marker.title);
 
+				// Bounce Marker
+				marker.setAnimation(google.maps.Animation.BOUNCE);
+
+				// Stop bounce
 				setTimeout(function () {
 			          marker.setAnimation(null);
-			      }, 2800);
+			      }, 2120);
+				//console.info('THEE DESCRIPTION: '+marker.description);
 
+				// Get marker description and open info window
+				modelCxt.infoWindow.setContent(marker.description);
+				modelCxt.infoWindow.open(marker.get('map'), marker);
+
+				// Move map center to clicked marker
+				modelCxt.map.panTo(marker.getPosition());
 
 			}
+
+
 
 	} // END VIEW MODEL
 
