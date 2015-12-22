@@ -105,6 +105,16 @@ window.onload = function() {
 		}
 	];
 
+	//AJAX FUNCTION FOR FLICKER
+
+	//AJAX CALL FOR YELP -- 
+
+	/*
+		The 2 functions above will make AJAX call, retrieve info, stringify/format and return an HTML string
+		to be used in infoWindow
+	*/
+
+
 	// Constructor to create new markers
 	var Marker = function (latLng, title, icon, description, map) {
 	    return new google.maps.Marker({
@@ -124,9 +134,6 @@ window.onload = function() {
 		var modelCxt = this;
 
 		modelCxt.placeList = ko.observableArray();
-
-		// Set up in failed attempt to bind css class to a boolean
-		modelCxt.activeClass = ko.observable('true');
 
 		// Initialize Google Map with correct coordinates and options
 		var mapCanvas = document.getElementById('map');
@@ -178,7 +185,13 @@ window.onload = function() {
 				setTimeout(function () {
 			          marker.setAnimation(null);
 			      }, 2150);
-				//console.info('THEE DESCRIPTION: '+marker.description);
+				
+				/*
+					Create temporary string to w/ title and description marker as placeholder
+					for info that will come below.	
+
+					Call two functions above to retrieve API strings
+				*/
 
 				// Get marker description and open info window
 				modelCxt.infoWindow.setContent(marker.description);
@@ -205,10 +218,10 @@ window.onload = function() {
 			    if( testTitle.indexOf(query) >= 0 ) {
 			    	list.setVisible(true);
 			    	//modelCxt.isVisible(true);
-			    	list.show= true;
+			    	list.show(true);
 			    	} else {
 			    	list.setVisible(false);
-			    	list.show= false;
+			    	list.show(false);
 			    	//console.info("Show is: "+list.show+" for "+list.title);
 			    	//modelCxt.isVisible(false);
 			    	//modelCxt.isActive(list, false);
