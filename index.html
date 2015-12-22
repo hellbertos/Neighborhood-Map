@@ -18,12 +18,19 @@
 		<div id="container">
 			<div id="header"><span class="hamager">≡</span><img src="img/fogbelt-sf-2.png" class="logo"><h1>Neighborhood Guide</h1></div>
 			<div id="nav-bar">
-				<input id="filter-input" class="sidebar-input" type="text">
-				<!-- ko with: placeList-->
-				<ul id="places-list" data-bind="foreach: $parent.placeList">
-					<li class="nav-li" data-bind="text: title, click: $root.selectMarker"></li>
+
+				<input id="filter-input" class="sidebar-input" data-bind="value: searchString, valueUpdate: 'afterkeydown', event: { 'keyup': $root.searchIt }" type="text">
+
+				
+				<ul id="places-list" data-bind="foreach: placeList">
+					<!-- ko if: show -->
+						<li class="nav-li" data-bind="text: title, click: $root.selectMarker"></li>
+					<!-- /ko -->
+
+
+					<!-- knockout css binding -- css: {visible: $root.isActive(title) } :: also visible: $root.showOrNo :: also  css: ($root.activeClass === true) ? 'visible' : 'notVisible'  :: also   css: { 'visible' :  activeClass(), 'notVisible':  !activeClass() ::  css: { 'visible' : $root.activeClass, 'notVisible' : !$root.activeClass } -->
 				</ul>
-				<!-- /ko -->
+				
 			</div>
 			<div id="map"></div>
 		</div>
