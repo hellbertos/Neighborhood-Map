@@ -125,8 +125,8 @@ window.onload = function() {
 			data: {
 				format: 'json'
 			},
-			error: function() {
-				//console.log("AJAX Error!");
+			error: function(jqXHR, testStatus, errorThrown) {
+				console.log("AJAX Error! "+errorThrown);
 				var stringToSend = '<div>Sorry, we do not have a picture for this location.</div>';
 				$('#fsHere').append(stringToSend);
 			},
@@ -146,6 +146,8 @@ window.onload = function() {
 				// Set up the string w/ data and append to div in info window
 				var stringToSend = '<div><img src="'+data.response.venue.photos.groups[0].items[randomnumber].prefix+"150x150"+data.response.venue.photos.groups[0].items[randomnumber].suffix+'"></div>';
 				$('#fs-here').append(stringToSend);
+				console.log(data);
+				console.info(data.response.venue.photos.groups[0].items[randomnumber].prefix);
 
 			}
 		});
@@ -245,7 +247,13 @@ window.onload = function() {
 	var ViewModel = function() {
 		var modelCxt = this;
 
+		// Declare an observable array so the static data above can be 'watched' by Knockout
+		// and we can use it in the UI
 		modelCxt.placeList = ko.observableArray();
+
+		// Declare an observable variable to keep track of the sidebar nav's 'drawer' visibility
+		// so the nav can slide on and off screen; mainly for mobile users
+		modelCxt.drawerVisible = ko.observable(false);
 
 		// Initialize Google Map with correct coordinates and options
 		var mapCanvas = document.getElementById('map');
@@ -297,19 +305,19 @@ window.onload = function() {
 		      }, 2150);
 
 			// Set up a div to display stored content and API requested content
-			var placeContent = '<div id="info-win-interior"><h1 class="info-win-title">'+marker.title+'</h1><div id="fs-container"><div id="info-win-interior"></div>'+marker.description+'</div><div id="yelpHere"></div></div>';
+			var placeContent = '<div id="info-win-interior"><h1 class="info-win-title">'+marker.title+'</h1><div id="fs-container"><div id="fs-here"></div>'+marker.description+'</div><div id="yelpHere"></div></div>';
 
 			// Set up instance of info window
 			modelCxt.infoWindow.setContent(placeContent);
 			modelCxt.infoWindow.open(marker.get('map'), marker);
 
-			// Call API after window open so infoWindow elements can be populated
+			// Call API's after window open so infoWindow elements can be populated
 			var fsInsert = fourSqrCall(marker.title);
 			var yelpInsert = yelpCall(marker.title);
 
 			// Move map center to clicked marker
 			modelCxt.map.panTo(marker.getPosition());
-			console.info("getPosition is"+marker.getPosition());
+			//console.info("getPosition is"+marker.getPosition());
 
 		};
 
@@ -357,6 +365,21 @@ window.onload = function() {
 			}
 
 		};
+
+		// Toggle the sidebar menu on-screen visibility
+		modelCxt.toggleDrawer = function(){
+			var sidebar = document.getElementById('nav-bar');
+			if( modelCxt.drawerVisible() === true) {
+				sidebar.style.transform = "translateX(0)";
+				modelCxt.drawerVisible(false);
+			} else {
+				sidebar.style.transform = "translateX(-200px)";
+				modelCxt.drawerVisible(true);
+			}
+
+
+		};
+
 
 	}; // END VIEW MODEL
 
