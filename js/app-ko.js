@@ -145,7 +145,7 @@ window.onload = function() {
 
 				// Set up the string w/ data and append to div in info window
 				var stringToSend = '<div><img src="'+data.response.venue.photos.groups[0].items[randomnumber].prefix+"150x150"+data.response.venue.photos.groups[0].items[randomnumber].suffix+'"></div>';
-				$('#fsHere').append(stringToSend);
+				$('#fs-here').append(stringToSend);
 
 			}
 		});
@@ -297,7 +297,7 @@ window.onload = function() {
 		      }, 2150);
 
 			// Set up a div to display stored content and API requested content
-			var placeContent = '<div id="infoWinInterior"><h1 class="infoWinTitle">'+marker.title+'</h1><div id="fsContainer"><div id="fsHere"></div>'+marker.description+'</div><div id="yelpHere"></div></div>';
+			var placeContent = '<div id="info-win-interior"><h1 class="info-win-title">'+marker.title+'</h1><div id="fs-container"><div id="info-win-interior"></div>'+marker.description+'</div><div id="yelpHere"></div></div>';
 
 			// Set up instance of info window
 			modelCxt.infoWindow.setContent(placeContent);
