@@ -1,4 +1,4 @@
-# FEND L5 Neighborhodd Map
+# FEND Lesson 5: Neighborhood Map
 ## Fogbelt SF 
 ###A neighborhood map of the Ocean Beach area of San Francisco
 
