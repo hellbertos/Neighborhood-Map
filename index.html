@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,28 +10,19 @@
     <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet'>
     <!-- Style Sheets -->
     <link href="css/main.css" rel="stylesheet">
-
 </head>
-
 <body>
     <div id="container">
         <div id="header"><span class="hamager">≡</span><img src="img/fogbelt-sf-2.png" class="logo">
             <h1>Neighborhood Guide</h1>
         </div>
         <div id="nav-bar">
-
             <input id="filter-input" class="sidebar-input" data-bind="value: searchString, valueUpdate: 'afterkeydown', event: { 'keyup': $root.searchIt }" type="text">
-
-
             <ul id="places-list" data-bind="foreach: placeList">
                 <!-- ko if: show -->
                 <li class="nav-li" data-bind="text: title, click: $root.selectMarker"></li>
                 <!-- /ko -->
-
-
-                <!-- knockout css binding -- css: {visible: $root.isActive(title) } :: also visible: $root.showOrNo :: also  css: ($root.activeClass === true) ? 'visible' : 'notVisible'  :: also   css: { 'visible' :  activeClass(), 'notVisible':  !activeClass() ::  css: { 'visible' : $root.activeClass, 'notVisible' : !$root.activeClass } -->
             </ul>
-
         </div>
         <div id="map"></div>
     </div>
@@ -40,7 +30,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/oauth.js"></script>
     <script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/sha1.js"></script>
-
     <!-- Load Knockoutjs and Google Maps Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
     <script src="js/mapError.js"></script>
