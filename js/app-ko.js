@@ -2,24 +2,6 @@
  ** Fogbelt Neighborhood Map App with Knockout - Udacity FEND Lesson 5
 **/
 
-/**
-	ADD CUSTOM BINDING HANDLER -- Example
-
-	ko.bindingHandlers.showOrNo = {
-    init: function(element, valueAccessor) {
-        // Start visible/invisible according to initial value
-        var shouldDisplay = valueAccessor();
-        $(element).toggle(shouldDisplay);
-    },
-    update: function(element, valueAccessor) {
-        // On update, fade in/out
-        var shouldDisplay = valueAccessor();
-        shouldDisplay ? $(element).fadeIn() : $(element).fadeOut();
-    }
-};
-/************************************************/
-
-
 window.onload = function() {
 	// Set Up Data Model: The places to show on the map
 
@@ -38,7 +20,9 @@ window.onload = function() {
 		 },
 		 icon: eyeIcon,
 		 animation: null,
-		 description: 'The ruins of the former salt water fed bath house from the turn of the former century.'
+		 fsid: '4a05e6dbf964a52098721fe3',
+		 zip: '94121',
+		 description: 'The ruins of the former salt water fed bath house from the turn of the former century. Great visitors center and lots of hiking trails make it a must do!'
 		},
 		{title: 'Wise Surfboards',
 		latLng: {
@@ -47,7 +31,9 @@ window.onload = function() {
 		 },
 		 icon: surfIcon,
 		 animation: null,
-		 description: 'The oldest surviving surf shop in the city with views of the first peaks regularly surfed in San Francisco.'
+		 fsid: '4a6d0b27f964a52065d21fe3',
+		 zip: '94121',
+		 description: 'The oldest surviving surf shop in the city with views of the first peaks regularly surfed in San Francisco. They carry many of the top brands of boards and wetsuits.'
 		},
 		{title: 'The Beach Chalet',
 		latLng: {
@@ -56,7 +42,9 @@ window.onload = function() {
 		 },
 		 icon: dineIcon,
 		 animation: null,
-		 description: 'Come for the tasty food, stay for the tasty craft beers.'
+		 fsid: '43cc06a3f964a520c72d1fe3',
+		 zip: '94121',
+		 description: 'Come for the great sunsets, stay for the tasty craft beers. Incredible views of the Pacific Ocean, a fantastic menu as well as well as beers brewed in-house. Great after a day at the beach.'
 		},
 		{title: 'Ocean Beach',
 		latLng: {
@@ -65,7 +53,9 @@ window.onload = function() {
 		 },
 		 icon: eyeIcon,
 		 animation: null,
-		 description: 'Part of the Federal Parks Service, Ocean Beach is an awesome, natural experience of beach and ocean.'
+		 fsid: '409ad180f964a520eef21ee3',
+		 zip: '94122',
+		 description: 'Part of the Federal Parks Service, Ocean Beach is an awesome, natural experience of beach and ocean. Bonfires are allowed in the rings provided.'
 		},
 		{title: 'Aqua Surf Shop',
 		latLng: {
@@ -74,7 +64,9 @@ window.onload = function() {
 		 },
 		 icon: surfIcon,
 		 animation: null,
-		 description: 'Locally owned and operated. Staffed with top-quality gear and experts to help you make the right purchase or rental.'
+		 fsid: '4ad0f5e0f964a52084db20e3',
+		 zip: '94122',
+		 description: 'Locally owned and operated. Staffed with top-quality gear and experts to help you make the right purchase. Aqua also runs the only surfboard rental service in the area.'
 		},
 		{title: 'La Playa Taqueria',
 		latLng: {
@@ -83,7 +75,9 @@ window.onload = function() {
 		 },
 		 icon: dineIcon,
 		 animation: null,
-		 description: 'Argueably the best breakfast burritos in the fogbelt.'
+		 fsid: '4a664abcf964a52056c81fe3',
+		 zip: '94116',
+		 description: 'Argueably the best breakfast burritos in the fogbelt. An extensive menu of traditional Mexican food from dinner plates to venerable burritos',
 		},
 		{title: 'The Rip Tide Lounge',
 		latLng: {
@@ -92,7 +86,9 @@ window.onload = function() {
 		 },
 		 icon: drinkIcon,
 		 animation: null,
-		 description: 'The local place to grab a cold drink after a day Ocean Beach.'
+		 fsid: '4d3c6a863ec9a35dfd644881',
+		 zip: '94116',
+		 description: 'The local place to grab a cold drink after a day Ocean Beach. Live music, great beers on tap, drink specials and a fire place to warm up next to!'
 		},
 		{title: 'San Francisco Zoo',
 		latLng: {
@@ -101,21 +97,139 @@ window.onload = function() {
 		 },
 		 icon: eyeIcon,
 		 animation: null,
+		 fsid: '49ca9423f964a520c0581fe3',
+		 zip: '94132',
 		 description: 'The San Francisco Zoo is a world renowned exibit of live animals, conservation effort and research facility.'
 		}
 	];
 
-	//AJAX FUNCTION FOR FLICKER
+	//AJAX FUNCTION FOR FOUR SQUARE
+	var fourSqrCall = function(passedTitle) {
 
-	//AJAX CALL FOR YELP -- 
+		var placeFsId = null;
 
-	/*
-		The 2 functions above will make AJAX call, retrieve info, stringify/format and return an HTML string
-		to be used in infoWindow
-	*/
+		// Loop through the original array and get the foursquare ID of the venue
+		for(var s = 0; s < localCoords.length; s++ ) {
+			if(localCoords[s].title === passedTitle) {
+				placeFsId = localCoords[s].fsid;
+				console.info("The IDDD of "+localCoords[s].title+" is "+localCoords[s].fsid);
+			}
+		}
+
+		// Set Request string with correct info
+		var fsRequest = 'https://api.foursquare.com/v2/venues/'+placeFsId+'?client_id=TPXYNVAKFZ3ZO55KQBFIUEBKQWHSGFL3EPG10VS0SAZZ2O51&client_secret=AY30L1ITLWN3A0MVJHZBICG1WTX1FFQFGB52EIEYIRDNBQEU&v=20130815&limit=3';
+
+		// AJAX Call to foursquare
+		var fourSqrData = $.ajax({
+			url: fsRequest,
+			data: {
+				format: 'json'
+			},
+			error: function() {
+				//console.log("AJAX Error!");
+				var stringToSend = '<div>Sorry, we do not have a picture for this location.</div>';
+				$('#fsHere').append(stringToSend);
+			},
+			//dataType: 'jsonp',
+			success: function(data) {
+
+				// Get a picture to display from the photos offered by foursquare.
+				// See how many array entries (how many pictures) to choose from
+				var delimiter = data.response.venue.photos.groups[0].items.length;
+
+				// Get a random number for corresponding picture to display
+				var randomnumber = Math.floor(Math.random() * (delimiter - 1));
+
+				// Set up the source URL
+				var testRandPhoto = data.response.venue.photos.groups[0].items[randomnumber].prefix+'175x175'+data.response.venue.photos.groups[0].items[randomnumber].suffix;
+
+				// Set up the string w/ data and append to div in info window
+				var stringToSend = '<div><img src="'+data.response.venue.photos.groups[0].items[randomnumber].prefix+"150x150"+data.response.venue.photos.groups[0].items[randomnumber].suffix+'"></div>';
+				$('#fsHere').append(stringToSend);
+
+			}
+		});
+	};
+
+	//AJAX CALL to YELP --
+	var yelpCall = function(passedTitle) {
+
+		var zip;
+		// Get the zip code for the selected title
+		for(var t = 0; t < localCoords.length; t++ ) {
+			if(localCoords[t].title === passedTitle) {
+				zip = localCoords[t].zip;
+			}
+		}
+
+		var searchOn = 'food';
+
+		var auth = {
+		    consumerKey : "JXePW9urpn9rtM0EbzaZmg",
+		    consumerSecret : "tAaubaecdRrxjVjlUcnVH1QQWdo",
+		    accessToken : "ehhl-T6l4g5QarL6BP6WxhN4PTu3mCqH",
+		    accessTokenSecret : "nRFrxQ5KM1i7LfUMFVC4VHq6JZc",
+		    serviceProvider : {
+		        signatureMethod : "HMAC-SHA1"
+		    }
+		};
+
+		var terms = searchOn;
+		var near = zip;
+
+		var accessor = {
+		    consumerSecret : auth.consumerSecret,
+		    tokenSecret : auth.accessTokenSecret
+		};
+		parameters = [];
+		parameters.push(['term', terms]);
+		parameters.push(['location', near]);
+		parameters.push(['callback', 'cb']);
+		parameters.push(['oauth_consumer_key', auth.consumerKey]);
+		//parameters.push(['oauth_consumer_secret', auth.consumerSecret]);
+		parameters.push(['oauth_token', auth.accessToken]);
+		//parameters.push(['oauth_signature_method', 'HMAC-SHA1']);
+
+		var message = {
+		    'action' : 'http://api.yelp.com/v2/search',
+		    'method' : 'GET',
+		    'parameters' : parameters
+		};
+
+		OAuth.setTimestampAndNonce(message);
+		OAuth.SignatureMethod.sign(message, accessor);
+
+		var parameterMap = OAuth.getParameterMap(message.parameters);
+
+		$.ajax({
+		    'url' : message.action,
+		    'data' : parameterMap,
+		    'dataType' : 'jsonp',
+		    'jsonpCallback' : 'cb',
+		    'cache': true,
+		    'success' : function(data, textStats, XMLHttpRequest) {
+		        console.log(data);
+
+		        // Select a random venue from yelp's returned list
+		        var delimiter = data.businesses.length;
+
+				// Get a random number for corresponding picture to display
+				var randomBiz = Math.floor(Math.random() * (delimiter - 1));
+
+		            if(data) {
+		            	var stringToSend = '<h3>Dining Suggestion:</h3><div><strong>'+data.businesses[randomBiz].name+'</strong><ul><li>Yelp Rating: '+data.businesses[randomBiz].rating+'</li><li>Phone: '+data.businesses[randomBiz].display_phone+'</li><li>Address: '+data.businesses[randomBiz].location.address[0]+'</li><ul>';
+		            	$('#yelpHere').append(stringToSend);
+		            }
+		    },
+		    'error' : function(error) {
+		    	$('#yelpHere').append('Sorry, Yelp is not responding right now. Please try again later');
+		    }
+		});
 
 
-	// Constructor to create new markers
+	};
+
+	// Constructor to create new markers; adding them to the map at time of creation
 	var Marker = function (latLng, title, icon, description, map) {
 	    return new google.maps.Marker({
 	      position: latLng,
@@ -127,8 +241,6 @@ window.onload = function() {
 
 	 };
 
-
-
 	//Set up the view model
 	var ViewModel = function() {
 		var modelCxt = this;
@@ -137,70 +249,69 @@ window.onload = function() {
 
 		// Initialize Google Map with correct coordinates and options
 		var mapCanvas = document.getElementById('map');
+
 		// Add Latitude and Longitude options and zoom level
 		var mapOptions = {
 				center: new google.maps.LatLng(37.760191, -122.502345),
 				zoom: 14,
 				mapTypeId: google.maps.MapTypeId.ROADMAP
-		}
+		};
+
 		// Load up the map to its container element
 		modelCxt.map = new google.maps.Map(mapCanvas, mapOptions);
 
 		// Create global infoWindow object which will be reused for each location as per Google Maps Docs
-		modelCxt.infoWindow = new google.maps.InfoWindow({maxWidth: 260});
+		modelCxt.infoWindow = new google.maps.InfoWindow({maxWidth: 300});
 
 		//Create the markers
 		for(var i = 0; i < localCoords.length; i++ ) {
 			locale = localCoords[i];
 
-			// create the new markers
+			// create the new markers using google maps Marker constructor
 			var marker = (new Marker(locale.latLng, locale.title, locale.icon, locale.description, modelCxt.map) );
+
+			// Add an observable variable to test for change in visibility status of the list element in side bar nav
 			marker.show = ko.observable(true);
+
 			// Add the markers to an observable array
 			modelCxt.placeList.push(marker);
 
-			/*google.maps.event.addListener(marker, 'click', function() {
-        		modelCxt.resetMarker(marker);
-        	});**/
-
-			// Add the clickable event to the marker
+			// Add the clickable event to the marker -- Use closure so each item gets
+			// its own individual event
 			(function(marker) {
 				google.maps.event.addListener(marker, 'click', function() {
 					modelCxt.selectMarker(marker);
-				})
+				});
 			})(marker);
 
 		}
-		//console.info("OBsAry item is "+modelCtx.placeList()[0].title);
-
 
 		//Show the marker as selected
 		modelCxt.selectMarker = function(marker) {
-				//console.log("Animate: "+marker.animation+"\n"+marker.title);
+			// Bounce Marker
+			marker.setAnimation(google.maps.Animation.BOUNCE);
 
-				// Bounce Marker
-				marker.setAnimation(google.maps.Animation.BOUNCE);
+			// Stop bounce
+			setTimeout(function () {
+		          marker.setAnimation(null);
+		      }, 2150);
 
-				// Stop bounce
-				setTimeout(function () {
-			          marker.setAnimation(null);
-			      }, 2150);
-				
-				/*
-					Create temporary string to w/ title and description marker as placeholder
-					for info that will come below.	
+			// Set up a div to display stored content and API requested content
+			var placeContent = '<div id="infoWinInterior"><h1 class="infoWinTitle">'+marker.title+'</h1><div id="fsContainer"><div id="fsHere"></div>'+marker.description+'</div><div id="yelpHere"></div></div>';
 
-					Call two functions above to retrieve API strings
-				*/
+			// Set up instance of info window
+			modelCxt.infoWindow.setContent(placeContent);
+			modelCxt.infoWindow.open(marker.get('map'), marker);
 
-				// Get marker description and open info window
-				modelCxt.infoWindow.setContent(marker.description);
-				modelCxt.infoWindow.open(marker.get('map'), marker);
+			// Call API after window open so infoWindow elements can be populated
+			var fsInsert = fourSqrCall(marker.title);
+			var yelpInsert = yelpCall(marker.title);
 
-				// Move map center to clicked marker
-				modelCxt.map.panTo(marker.getPosition());
+			// Move map center to clicked marker
+			modelCxt.map.panTo(marker.getPosition());
+			console.info("getPosition is"+marker.getPosition());
 
-			}
+		};
 
 		// Filter input for available markers
 
@@ -208,34 +319,29 @@ window.onload = function() {
 		modelCxt.searchString = ko.observable();
 
 		modelCxt.searchIt = function(marker) {
+			// Force query entry to lower case
 			var query = modelCxt.searchString().toLowerCase();
-
-			//console.info('JUST TESTING THE TITLE:'+marker.title+' \n');
 
 			var theTest = function(list) {
 
-			    testTitle = list.title.toLowerCase();
+				// Force title testing against to lowercase
+				var testTitle = list.title.toLowerCase();
+
 			    if( testTitle.indexOf(query) >= 0 ) {
+			    	// setVisible shows and hides marker on map
+			    	// show(true) sets observable variable to show and hid nav list item
+
 			    	list.setVisible(true);
-			    	//modelCxt.isVisible(true);
 			    	list.show(true);
 			    	} else {
 			    	list.setVisible(false);
 			    	list.show(false);
-			    	//console.info("Show is: "+list.show+" for "+list.title);
-			    	//modelCxt.isVisible(false);
-			    	//modelCxt.isActive(list, false);
 			    	}
-			    	console.log(list);
-			    //console.log("The index of "+testTitle.indexOf(query)+" is "+testTitle);
-			    //return
-			}
+			};
 
-			//this.yep = modelCxt.placeList.filter(this.theTest);
-			//console.info(modelCxt.placeList()[4].title);
+			// Run through each list item w/ filter method to test whether its visible
 			modelCxt.placeList().filter(theTest);
-
-		}
+		};
 
 		// Set up visible class
 
@@ -250,37 +356,9 @@ window.onload = function() {
 				console.info("NOT!! "+modelCxt.activeClass() );
 			}
 
+		};
 
-		}
-
-		/**
-		modelCxt.isVisible = function(test){
-			//console.log("This is the "+obj.title+"\n and I am "+test);
-
-			if(test === true) {
-				//modelCxt.activeClass('visible');
-				console.info("Active CLASS: "+modelCxt.activeClass() );
-				//modelCxt.activeClass('true');
-			} else {
-				//modelCxt.activeClass('notVisible');
-				//modelCxt.activeClass('false');
-			}
-		}**/
-
-		/**modelCxt.showOrNo = function(elem) {
-			if (elem === true ) {
-				console.log("I AM TRUE "+elem);
-				return true;
-			} else {
-				console.info("I AM FALSE "+elem);
-				return false;
-			}
-		}
-		**/
-
-
-	} // END VIEW MODEL
-
+	}; // END VIEW MODEL
 
 	ko.applyBindings(new ViewModel());
-}
+};
