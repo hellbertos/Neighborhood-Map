@@ -13,7 +13,7 @@
 </head>
 <body>
     <div id="container">
-        <div id="header"><span class="hamager">≡</span><img src="img/fogbelt-sf-2.png" alt="FogbeltSF -- Outer Richmond San Francisco Neighborhood Blog" class="logo">
+        <div id="header"><span class="hamager" data-bind="click: $root.toggleDrawer">≡</span><img src="img/fogbelt-sf-2.png" alt="FogbeltSF -- Outer Richmond San Francisco Neighborhood Blog" class="logo">
             <h1>Neighborhood Guide</h1>
         </div>
         <div id="nav-bar">
@@ -37,7 +37,6 @@
     <!-- script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjzGhHdD9E-f-o-S4f21Cq82Q71qsik-8" async defer onerror="errorLoadingMap"></script-->
     <script src="https://maps.googleapis.com/maps/api/js" async defer onerror="errorLoadingMap"></script>
     <!-- Load local Scripts -->
-    <script src="js/hamager.js"></script>
     <script src="js/app-ko.js"></script>
 </body>
 
