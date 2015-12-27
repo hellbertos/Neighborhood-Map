@@ -109,10 +109,9 @@ window.onload = function() {
 		var placeFsId = null;
 
 		// Loop through the original array and get the foursquare ID of the venue
-		for(var s = 0; s < localCoords.length; s++ ) {
+		for( var s = 0; s < localCoords.length; s++ ) {
 			if(localCoords[s].title === passedTitle) {
 				placeFsId = localCoords[s].fsid;
-				console.info("The IDDD of "+localCoords[s].title+" is "+localCoords[s].fsid);
 			}
 		}
 
@@ -126,7 +125,6 @@ window.onload = function() {
 				format: 'json'
 			},
 			error: function(jqXHR, testStatus, errorThrown) {
-				console.log("AJAX Error! "+errorThrown);
 				var stringToSend = '<div>Sorry, we do not have a picture for this location.</div>';
 				$('#fsHere').append(stringToSend);
 			},
@@ -146,9 +144,6 @@ window.onload = function() {
 				// Set up the string w/ data and append to div in info window
 				var stringToSend = '<div><img src="'+data.response.venue.photos.groups[0].items[randomnumber].prefix+"150x150"+data.response.venue.photos.groups[0].items[randomnumber].suffix+'"></div>';
 				$('#fs-here').append(stringToSend);
-				console.log(data);
-				console.info(data.response.venue.photos.groups[0].items[randomnumber].prefix);
-
 			}
 		});
 	};
@@ -210,7 +205,6 @@ window.onload = function() {
 		    'jsonpCallback' : 'cb',
 		    'cache': true,
 		    'success' : function(data, textStats, XMLHttpRequest) {
-		        console.log(data);
 
 		        // Select a random venue from yelp's returned list
 		        var delimiter = data.businesses.length;
@@ -330,7 +324,6 @@ window.onload = function() {
 
 			// Move map center to clicked marker
 			modelCxt.map.panTo(marker.getPosition());
-			//console.info("getPosition is"+marker.getPosition());
 
 		};
 
@@ -366,7 +359,6 @@ window.onload = function() {
 
 		// Toggle the sidebar menu on-screen visibility
 		modelCxt.toggleDrawer = function(){
-
 			if( modelCxt.drawerVisible() === true) {
 				sidebar.style.transform = "translateX(0)";
 				modelCxt.drawerVisible(false);
