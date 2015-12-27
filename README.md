@@ -1,5 +1,6 @@
-# Neighborhood-Map
-FEND L5 Neighborhodd Map
+# FEND L5 Neighborhodd Map
+## Fogbelt SF - A neighborhood map of the Ocean Beach area of San Francisco
+
 
 This is my Udacity FEND Lesson 5 Final Project
 
