@@ -255,12 +255,25 @@ window.onload = function() {
 		// so the nav can slide on and off screen; mainly for mobile users
 		modelCxt.drawerVisible = ko.observable(false);
 
+		// Get screen width on first load to attempt to offer small-screen users a better experience by hiding the sidebar
+		var screenWidth = screen.width;
+
+		// Select side-bar element for manipulation here and in toggleDrawer function
+		var sidebar = document.getElementById('nav-bar');
+
+		// Force the sidebar into the window if user's screen size is larger than 600px
+		if( screenWidth > 600 ) {
+			sidebar.style.transform = "translateX(200px)";
+			modelCxt.drawerVisible(true);
+		}
+
+
 		// Initialize Google Map with correct coordinates and options
 		var mapCanvas = document.getElementById('map');
 
 		// Add Latitude and Longitude options and zoom level
 		var mapOptions = {
-				center: new google.maps.LatLng(37.760191, -122.502345),
+				center: new google.maps.LatLng(37.760191, -122.512345),
 				zoom: 14,
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
@@ -351,29 +364,14 @@ window.onload = function() {
 			modelCxt.placeList().filter(theTest);
 		};
 
-		// Set up visible class
-
-		modelCxt.isActive = function(data, test) {
-			if(test === true) {
-				//return true;
-				modelCxt.activeClass(true);
-				console.info("ACTIVE!! "+modelCxt.activeClass() );
-			} else {
-				//return false;
-				modelCxt.activeClass(false);
-				console.info("NOT!! "+modelCxt.activeClass() );
-			}
-
-		};
-
 		// Toggle the sidebar menu on-screen visibility
 		modelCxt.toggleDrawer = function(){
-			var sidebar = document.getElementById('nav-bar');
+
 			if( modelCxt.drawerVisible() === true) {
 				sidebar.style.transform = "translateX(0)";
 				modelCxt.drawerVisible(false);
 			} else {
-				sidebar.style.transform = "translateX(-200px)";
+				sidebar.style.transform = "translateX(200px)";
 				modelCxt.drawerVisible(true);
 			}
 
