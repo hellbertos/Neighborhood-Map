@@ -66,7 +66,7 @@ window.onload = function() {
 		 animation: null,
 		 fsid: '4ad0f5e0f964a52084db20e3',
 		 zip: '94122',
-		 description: 'Locally owned and operated. Staffed with top-quality gear and experts to help you make the right purchase. Aqua also runs the only surfboard rental service in the area.'
+		 description: 'Locally owned and operated. Staffed with experts to help you make the right purchase. Aqua also runs the only surfboard rental service in the area.'
 		},
 		{title: 'La Playa Taqueria',
 		latLng: {
