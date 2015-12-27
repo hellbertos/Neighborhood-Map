@@ -1,45 +1,54 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Fogbelt Neighborhood App</title>
-		<!-- Google fonts -->
-		<!-- link href='http://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600' rel='stylesheet'-->
-		<!-- link href='http://fonts.googleapis.com/css?family=Michroma' rel='stylesheet' -->
-		<link href='https://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
-		<link href='https://fonts.googleapis.com/css?family=Passion+One:400' rel='stylesheet'>
-		<!-- Style Sheets -->
-		<link href="css/main.css" rel="stylesheet">
 
-	</head>
-	<body>
-		<div id="container">
-			<div id="header"><span class="hamager">≡</span><img src="img/fogbelt-sf-2.png" class="logo"><h1>Neighborhood Guide</h1></div>
-			<div id="nav-bar">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fogbelt Neighborhood App</title>
+    <!-- Google fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Oxygen:400,700' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet'>
+    <!-- Style Sheets -->
+    <link href="css/main.css" rel="stylesheet">
 
-				<input id="filter-input" class="sidebar-input" data-bind="value: searchString, valueUpdate: 'afterkeydown', event: { 'keyup': $root.searchIt }" type="text">
+</head>
 
-				
-				<ul id="places-list" data-bind="foreach: placeList">
-					<!-- ko if: show -->
-						<li class="nav-li" data-bind="text: title, click: $root.selectMarker"></li>
-					<!-- /ko -->
+<body>
+    <div id="container">
+        <div id="header"><span class="hamager">≡</span><img src="img/fogbelt-sf-2.png" class="logo">
+            <h1>Neighborhood Guide</h1>
+        </div>
+        <div id="nav-bar">
+
+            <input id="filter-input" class="sidebar-input" data-bind="value: searchString, valueUpdate: 'afterkeydown', event: { 'keyup': $root.searchIt }" type="text">
 
 
-					<!-- knockout css binding -- css: {visible: $root.isActive(title) } :: also visible: $root.showOrNo :: also  css: ($root.activeClass === true) ? 'visible' : 'notVisible'  :: also   css: { 'visible' :  activeClass(), 'notVisible':  !activeClass() ::  css: { 'visible' : $root.activeClass, 'notVisible' : !$root.activeClass } -->
-				</ul>
-				
-			</div>
-			<div id="map"></div>
-		</div>
-		<!-- Google Maps API, Jquery, Knockout and JS files -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
-		<script src="https://maps.googleapis.com/maps/api/js"></script>
-		<script src="js/hamager.js"></script>
-		<!-- script src="js/app-test.js"></script -->
-		<script src="js/app-ko.js"></script>
-	</body>
+            <ul id="places-list" data-bind="foreach: placeList">
+                <!-- ko if: show -->
+                <li class="nav-li" data-bind="text: title, click: $root.selectMarker"></li>
+                <!-- /ko -->
+
+
+                <!-- knockout css binding -- css: {visible: $root.isActive(title) } :: also visible: $root.showOrNo :: also  css: ($root.activeClass === true) ? 'visible' : 'notVisible'  :: also   css: { 'visible' :  activeClass(), 'notVisible':  !activeClass() ::  css: { 'visible' : $root.activeClass, 'notVisible' : !$root.activeClass } -->
+            </ul>
+
+        </div>
+        <div id="map"></div>
+    </div>
+    <!-- Load Jquery, Oauth and Sha1 Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/oauth.js"></script>
+    <script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/sha1.js"></script>
+
+    <!-- Load Knockoutjs and Google Maps Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+    <script src="js/mapError.js"></script>
+    <!-- script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjzGhHdD9E-f-o-S4f21Cq82Q71qsik-8" async defer onerror="errorLoadingMap"></script-->
+    <script src="https://maps.googleapis.com/maps/api/js" async defer onerror="errorLoadingMap"></script>
+    <!-- Load local Scripts -->
+    <script src="js/hamager.js"></script>
+    <script src="js/app-ko.js"></script>
+</body>
+
 </html>
