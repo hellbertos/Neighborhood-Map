@@ -1,10 +1,18 @@
 /*
 Fogbelt Neighborhood Map App - styles
 */
-html { height: 100% }
-body { height: 100%; margin: 0px; padding: 0px;
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale; }
+html {
+	height: 100%
+}
+
+body {
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
 #container {
 	width: 100%;
 	height: 100%;
@@ -47,13 +55,14 @@ h1 {
 	font-size: 1.6em;
 	color: #aaa;
 }
+
 h3 {
 	font-family: 'Oxygen', san-serif;
 	font-weight: 400;
 	color: #555;
 }
 
-.infoWinTitle {
+.info-win-title {
 	margin-top: 0;
 }
 
@@ -102,15 +111,15 @@ h3 {
 	margin-left: 20px;
 }
 
-#infoWinInterior {
+#info-win-interior {
 	max-height: 240px;
 }
 
-#fsContainer {
+#fs-container {
 	min-height: 150px;
 }
 
-#fsHere {
+#fs-here {
 	float: left;
 	margin: 0 12px 12px 0;
 }
@@ -120,19 +129,21 @@ h3 {
 		font-size: 1em;
 		margin: 0 25px 0 0;
 	}
+
 	.nav-li {
 		font-size: 16px;
 		margin-bottom: 10px;
 	}
+
 	#header {
 		text-align: center;
 	}
+
 	.logo {
 		width: 60%;
 		height: 70%;
 		clear: both;
 		float: none;
 	}
-
 
  }
