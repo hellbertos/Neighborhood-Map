@@ -119,7 +119,7 @@ window.onload = function() {
 		var fsRequest = 'https://api.foursquare.com/v2/venues/'+placeFsId+'?client_id=TPXYNVAKFZ3ZO55KQBFIUEBKQWHSGFL3EPG10VS0SAZZ2O51&client_secret=AY30L1ITLWN3A0MVJHZBICG1WTX1FFQFGB52EIEYIRDNBQEU&v=20130815&limit=3';
 
 		// AJAX Call to foursquare
-		var fourSqrData = $.ajax({
+		$.ajax({
 			url: fsRequest,
 			data: {
 				format: 'json'
@@ -137,9 +137,6 @@ window.onload = function() {
 
 				// Get a random number for corresponding picture to display
 				var randomnumber = Math.floor(Math.random() * (delimiter - 1));
-
-				// Set up the source URL
-				var testRandPhoto = data.response.venue.photos.groups[0].items[randomnumber].prefix+'175x175'+data.response.venue.photos.groups[0].items[randomnumber].suffix;
 
 				// Set up the string w/ data and append to div in info window
 				var stringToSend = '<div><img src="'+data.response.venue.photos.groups[0].items[randomnumber].prefix+"150x150"+data.response.venue.photos.groups[0].items[randomnumber].suffix+'"></div>';
@@ -319,8 +316,8 @@ window.onload = function() {
 			modelCxt.infoWindow.open(marker.get('map'), marker);
 
 			// Call API's after window open so infoWindow elements can be populated
-			var fsInsert = fourSqrCall(marker.title);
-			var yelpInsert = yelpCall(marker.title);
+			fourSqrCall(marker.title);
+			yelpCall(marker.title);
 
 			// Move map center to clicked marker
 			modelCxt.map.panTo(marker.getPosition() );
