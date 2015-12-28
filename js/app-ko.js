@@ -109,7 +109,7 @@ window.onload = function() {
 		var placeFsId = null;
 
 		// Loop through the original array and get the foursquare ID of the venue
-		for( var s = 0; s < localCoords.length; s++ ) {
+		for( var s = 0, len = localCoords.length; s < len; s++ ) {
 			if(localCoords[s].title === passedTitle) {
 				placeFsId = localCoords[s].fsid;
 			}
@@ -153,7 +153,7 @@ window.onload = function() {
 
 		var zip;
 		// Get the zip code for the selected title
-		for(var t = 0; t < localCoords.length; t++ ) {
+		for(var t = 0, len = localCoords.length; t < len; t++ ) {
 			if(localCoords[t].title === passedTitle) {
 				zip = localCoords[t].zip;
 			}
@@ -279,7 +279,7 @@ window.onload = function() {
 		modelCxt.infoWindow = new google.maps.InfoWindow({maxWidth: 300});
 
 		//Create the markers
-		for(var i = 0; i < localCoords.length; i++ ) {
+		for(var i = 0, len = localCoords.length; i < len; i++ ) {
 			locale = localCoords[i];
 
 			// create the new markers using google maps Marker constructor
