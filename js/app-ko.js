@@ -197,7 +197,7 @@ window.onload = function() {
 
 		var yelpRequestTimeout = setTimeout(function() {
 			$('#yelpHere').append('Sorry, Yelp is not responding right now. Please try again later');
-		}, 7000);
+		}, 9000);
 
 		$.ajax({
 		    'url' : message.action,
@@ -275,7 +275,7 @@ window.onload = function() {
 		modelCxt.map = new google.maps.Map(mapCanvas, mapOptions);
 
 		// Create global infoWindow object which will be reused for each location as per Google Maps Docs
-		modelCxt.infoWindow = new google.maps.InfoWindow({maxWidth: 300});
+		modelCxt.infoWindow = new google.maps.InfoWindow({maxWidth: 280});
 
 		//Create the markers
 		for(var i = 0, len = localCoords.length; i < len; i++ ) {
