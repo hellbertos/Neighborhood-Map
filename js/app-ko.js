@@ -256,7 +256,7 @@ window.onload = function() {
 		var sidebar = document.getElementById('nav-bar');
 
 		// Force the sidebar into the window if user's screen size is larger than 600px
-		if( screenWidth > 600 ) {
+		if( screenWidth > 768 ) {
 			sidebar.style.transform = "translateX(200px)";
 			modelCxt.drawerVisible(true);
 		}
@@ -323,7 +323,17 @@ window.onload = function() {
 			var yelpInsert = yelpCall(marker.title);
 
 			// Move map center to clicked marker
-			modelCxt.map.panTo(marker.getPosition());
+			modelCxt.map.panTo(marker.getPosition() );
+
+			// Offset map's new center so info windows are entirely visible allowing user to close w/o scrolling
+			// TODO: Learn getProjection(), getBounds() and fromLatLngToPoint() to figure out how to do this
+			// in a more dynamic manner based on the viewable area
+			modelCxt.map.panBy(20, -200);
+
+			if( screenWidth <= 768 ) {
+				sidebar.style.transform = "translateX(0)";
+				modelCxt.drawerVisible(false);
+			}
 
 		};
 
@@ -343,13 +353,14 @@ window.onload = function() {
 
 			    if( testTitle.indexOf(query) >= 0 ) {
 			    	// setVisible shows and hides marker on map
-			    	// show(true) sets observable variable to show and hid nav list item
+			    	// show(true) sets observable variable to show and hide nav list item
 
 			    	list.setVisible(true);
 			    	list.show(true);
 			    	} else {
 			    	list.setVisible(false);
 			    	list.show(false);
+			    	modelCxt.infoWindow.close(list.get('map'), list);
 			    	}
 			};
 
@@ -366,7 +377,6 @@ window.onload = function() {
 				sidebar.style.transform = "translateX(200px)";
 				modelCxt.drawerVisible(true);
 			}
-
 
 		};
 
