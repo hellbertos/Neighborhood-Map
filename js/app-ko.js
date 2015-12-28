@@ -1,5 +1,11 @@
 /**
  ** Fogbelt Neighborhood Map App with Knockout - Udacity FEND Lesson 5
+ ** By - James Ruggieri Dec 2015
+ **
+ ** This app offers a mini tour of my neighborhood using google maps. It offers up a small sampling
+ ** of a few various points of interest and businesses of note which I feel offers a nice taste of the
+ ** beach neighborhoods in San Francisco. Click on any of the markers to get more information about that
+ ** particular locale and a yelp suggestion about (other) places to eat in the area
 **/
 
 window.onload = function() {
@@ -103,7 +109,12 @@ window.onload = function() {
 		}
 	];
 
-	//AJAX FUNCTION FOR FOUR SQUARE
+	/** AJAX FUNCTION FOR FOUR SQUARE
+	 **
+	 ** This function is passed the title (name) of a locale to which it matches a corresponding Foursquare ID from the data model.
+	 ** Using that ID, it passes a request to the Foursquare API to retrieve information about the place. From within that data,
+	 ** the function then determines how many photos exist (delimiter) then chooses a random image to display in information window
+	*/
 	var fourSqrCall = function(passedTitle) {
 
 		var placeFsId = null;
@@ -124,11 +135,13 @@ window.onload = function() {
 			data: {
 				format: 'json'
 			},
+			// On error, this function will append a notice in the info window informing the user there has been an issue
 			error: function(jqXHR, testStatus, errorThrown) {
 				var stringToSend = '<div>Sorry, we do not have a picture for this location.</div>';
 				$('#fsHere').append(stringToSend);
 			},
-			//dataType: 'jsonp',
+			// On a successful return of data, the function will select a random photo insert it into a string w/ embedded html
+			// and append it to teh appropriate div in the info-window
 			success: function(data) {
 
 				// Get a picture to display from the photos offered by foursquare.
@@ -145,7 +158,13 @@ window.onload = function() {
 		});
 	};
 
-	//AJAX CALL to YELP --
+	/** AJAX FUNCTION for YELP
+	 **
+	 ** This function is passed the title (name) of a locale to which it matches a corresponding zipcode from the data model.
+	 ** Using the zipcode, it passes a request to the Yelp API to retrieve information about food related businesses (var searchOn).
+	 ** From within that data, the function chooses a random business to suggest to the user as an alternative, composes an HTML
+	 ** string and appends it to the appropriate div in the info-window
+	*/
 	var yelpCall = function(passedTitle) {
 
 		var zip;
@@ -158,6 +177,7 @@ window.onload = function() {
 
 		var searchOn = 'food';
 
+		// Set up Oauth
 		var auth = {
 		    consumerKey : "JXePW9urpn9rtM0EbzaZmg",
 		    consumerSecret : "tAaubaecdRrxjVjlUcnVH1QQWdo",
@@ -194,7 +214,10 @@ window.onload = function() {
 		OAuth.SignatureMethod.sign(message, accessor);
 
 		var parameterMap = OAuth.getParameterMap(message.parameters);
+		//FINISH Oauth
 
+		// Set up a timeout to handle a slow connection or an error when connecting to Yelp due to the
+		// need to use jsonp
 		var yelpRequestTimeout = setTimeout(function() {
 			$('#yelpHere').append('Sorry, Yelp is not responding right now. Please try again later');
 		}, 9000);
@@ -205,6 +228,7 @@ window.onload = function() {
 		    'dataType' : 'jsonp',
 		    'jsonpCallback' : 'cb',
 		    'cache': true,
+		    // On success, select a random business, compose a string and append it to the the correct div in the info-window
 		    'success' : function(data, textStats, XMLHttpRequest) {
 
 		        // Select a random venue from yelp's returned list
