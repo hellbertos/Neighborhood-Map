@@ -195,6 +195,10 @@ window.onload = function() {
 
 		var parameterMap = OAuth.getParameterMap(message.parameters);
 
+		var yelpRequestTimeout = setTimeout(function() {
+			$('#yelpHere').append('Sorry, Yelp is not responding right now. Please try again later');
+		}, 7000);
+
 		$.ajax({
 		    'url' : message.action,
 		    'data' : parameterMap,
@@ -213,9 +217,7 @@ window.onload = function() {
 		            	var stringToSend = '<h3>Dining Suggestion:</h3><div><strong>'+data.businesses[randomBiz].name+'</strong><ul><li>Yelp Rating: '+data.businesses[randomBiz].rating+'</li><li>Phone: '+data.businesses[randomBiz].display_phone+'</li><li>Address: '+data.businesses[randomBiz].location.address[0]+'</li><ul>';
 		            	$('#yelpHere').append(stringToSend);
 		            }
-		    },
-		    'error' : function(error) {
-		    	$('#yelpHere').append('Sorry, Yelp is not responding right now. Please try again later');
+		        clearTimeout(yelpRequestTimeout);
 		    }
 		});
 
