@@ -5,7 +5,7 @@
 
 This is my Udacity FEND Lesson 5 Final Project
 
-This mini app offers a segment of my neighborhood and few of the cooler aspects of within; from shops to restaurants to points of interest.
+This mini app offers a mini tour of my neighborhood and few of the cooler aspects of within using the google maps API. It offers up a small sampling of a few various points of interest, from shops to restaurants to points of interest. It offers a small taste of the beach neighborhoods in San Francisco. Click on any of the markers to get more information about that particular locale and a yelp suggestion about (other) places to eat in the area
 
 Please download the repository and open the index.html file in a modern web browser, preferably the latest Google Chrome, to run this app.
 
